@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trip Guide</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+
+    form input, form button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+      width: 100%;
+    }
+
+    form button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    .place-card, .explore-card {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #eef;
+      border-left: 4px solid #007bff;
+    }
+
+    .recommended {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+    }
+
+    .recommended img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 15px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Trip Guide</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="book-hotels.html">Book Hotels</a>
+    <a href="trip-guide.html">Trip Guide</a>
+  </nav>
+</header>
+
+<main>
+
+  <section>
+    <h2>Overview - Recommended & Famous Places</h2>
+    <div class="recommended">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/6b/92/ef/caption.jpg" alt="Golden Temple">
+      <div>
+        <strong>Golden Temple</strong><br>
+        Amritsar
+      </div>
+    </div>
+    <div class="recommended">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Houseboats_at_Kerala_Backwaters.jpg" alt="Kerala Backwaters">
+      <div>
+        <strong>Backwaters</strong><br>
+        Kerala
+      </div>
+    </div>
+    <div class="recommended">
+      <img src="https://media.timeout.com/images/105984009/750/562/image.jpg" alt="Goa Beaches">
+      <div>
+        <strong>Goa Beaches</strong><br>
+        Goa
+      </div>
+    </div>
+    <div class="recommended">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuJMlnNoHeW8Q_kyR1pQ9dEk-_sfR6L5PIRw" alt="Jaipur Palaces">
+      <div>
+        <strong>Jaipur Palaces</strong><br>
+        Rajasthan
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Add a Place to Explore</h2>
+    <form id="addPlaceForm">
+      <input type="text" id="placeName" placeholder="Place Name" required />
+      <input type="text" id="placeLocation" placeholder="Location" required />
+      <button type="submit">Add to Explore</button>
+    </form>
+  </section>
+
+
+  <section>
+    <h2>Explore - Added Places</h2>
+    <div id="exploreList">
+
+    </div>
+  </section>
+</main>
+<script>
+  const addPlaceForm = document.getElementById('addPlaceForm');
+  const exploreList = document.getElementById('exploreList');
+
+  addPlaceForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('placeName').value.trim();
+    const location = document.getElementById('placeLocation').value.trim();
+
+    if (name && location) {
+      const guideInfo = getGuideInfo(name, location);
+
+      const newPlace = document.createElement('div');
+      newPlace.className = 'explore-card';
+      newPlace.innerHTML = `
+        <strong>${name}</strong><br>
+        <strong>Location:</strong> ${location}<br>
+        <p>${guideInfo}</p>
+      `;
+
+      exploreList.appendChild(newPlace);
+
+      document.getElementById('placeName').value = '';
+      document.getElementById('placeLocation').value = '';
+    }
+  });
+
+
+  function getGuideInfo(name, location) {
+    const placeLower = name.toLowerCase();
+    if (placeLower.includes('beach')) {
+      return "Perfect for sunbathing and water sports. Don’t forget your sunscreen!";
+    } else if (placeLower.includes('temple')) {
+      return "A peaceful and spiritual experience. Respect local customs.";
+    } else if (placeLower.includes('fort') || placeLower.includes('palace')) {
+      return "Explore rich historical architecture. Guided tours are recommended.";
+    } else if (placeLower.includes('hill')) {
+      return "Ideal for nature lovers and trekkers. Carry warm clothes!";
+    } else {
+      return "Explore local culture, food, and landmarks. Check weather before you go.";
+    }
+  }
+</script>
+
+
+</body>
+</html>
